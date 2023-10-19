@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import * as Yup from "yup";
+import * as Location from "expo-location";
 
 import {
   AppForm as Form,
@@ -12,6 +13,7 @@ import Screen from "../components/Screen";
 import CatergoryPickerItem from "../components/CatergoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
 
+// Form validation / Yup is used for form validation
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
   price: Yup.number().required().min(1).max(10000).label("Price"),
@@ -20,7 +22,7 @@ const validationSchema = Yup.object().shape({
   images: Yup.array().min(1, "Please select at least one image."),
 });
 
-// List of category item in drop down menu
+// List of category items in drop down menu
 const categories = [
   {
     label: "Furniture",
@@ -30,35 +32,50 @@ const categories = [
   },
   { label: "Cars", value: 2, backgroundColor: "#fd9644", icon: "car" },
   { label: "Cameras", value: 3, backgroundColor: "#fed330", icon: "camera" },
-  { label: "Games", value: 3, backgroundColor: "#26de81", icon: "cards" },
+  { label: "Games", value: 4, backgroundColor: "#26de81", icon: "cards" },
   {
     label: "Clothing",
-    value: 3,
+    value: 5,
     backgroundColor: "#2bcbba",
     icon: "shoe-heel",
   },
-  { label: "Sports", value: 3, backgroundColor: "#45aaf2", icon: "basketball" },
+  { label: "Sports", value: 6, backgroundColor: "#45aaf2", icon: "basketball" },
   {
     label: "Movies & Music",
-    value: 3,
+    value: 7,
     backgroundColor: "#4b7bec",
     icon: "headphones",
   },
   {
     label: "Books",
-    value: 3,
+    value: 8,
     backgroundColor: "#6908F5",
     icon: "book",
   },
   {
     label: "other",
-    value: 3,
+    value: 9,
     backgroundColor: "#BCB8BA",
     icon: "book",
   },
 ];
 
 function ListingEditScreen() {
+  const [location, setLocation] = useState();
+
+  const getLocation = async () => {
+    const { granted } = await Location.requestForegroundPermissionsAsync();
+    if (!granted) return;
+    const {
+      coords: { latitude, longitude },
+    } = await Location.getLastKnownPositionAsync();
+    setLocation({ latitude, longitude });
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   return (
     <Screen style={styles.container}>
       <Form
@@ -69,7 +86,7 @@ function ListingEditScreen() {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => console.log(location)}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />

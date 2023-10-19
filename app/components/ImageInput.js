@@ -16,6 +16,7 @@ function ImageInput({ imageUri, onChangeImage }) {
     requestPermission();
   }, []);
 
+  // Give uswer permissions to access devices photos
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
     if (!granted) alert("You need to enable permission to access the library.");

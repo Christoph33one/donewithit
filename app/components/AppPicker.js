@@ -18,7 +18,7 @@ import PickerItem from "./PickerItem";
 function AppPicker({
   icon,
   items,
-  numberOfColums = 1,
+  numberOfColumns = 3,
   onSelectItem,
   PickerItemComponent = PickerItem,
   placeholder,
@@ -58,7 +58,7 @@ function AppPicker({
           <FlatList
             data={items}
             keyExtractor={(item) => item.value.toString()}
-            numColumns={numberOfColums}
+            numColumns={numberOfColumns}
             renderItem={({ item }) => (
               <PickerItemComponent
                 item={item}

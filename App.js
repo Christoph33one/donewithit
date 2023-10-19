@@ -3,7 +3,7 @@ import { TextInput, Text, Switch } from "react-native";
 import Icon from "./app/components/Icon";
 import ViewImageScreen from "./app/screens/ViewImageScreen";
 // import AppText from "./app/components/AppText";
-import Card from "./app/components/card";
+import Card from "./app/components/Card";
 import AccountScreen from "./app/screens/AccountScreen";
 import ListingsScreen from "./app/screens/ListingsScreen";
 
