@@ -21,12 +21,13 @@ import ImageInputList from "./app/components/ImageInputList";
 import Screen from "./app/components/Screen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Link = () => {
   const navigation = useNavigation();
   return (
     <Button
-      title="Click"
+      title="View Tweet"
       onPress={() => navigation.navigate("TweetDetails", { id: 1 })}
     />
   );
@@ -48,26 +49,47 @@ const TweetDetails = ({ route }) => (
 const Stack = createStackNavigator();
 
 const StackNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Tweets" component={Tweets} />
+  <Stack.Navigator
+    screenOptions={{
+      headerStyle: { backgroundColor: "dodgerblue" },
+      headerTintColor: "white",
+    }}
+  >
     <Stack.Screen
-      name="TweetDetails"
-      component={TweetDetails}
-      options={({ route }) => ({ title: route.params.id })}
+      name="Tweets"
+      component={Tweets}
+      options={{
+        headerStyle: { backgroundColor: "tomato" },
+        headerTintColor: "white",
+      }}
     />
+    <Stack.Screen name="TweetDetails" component={TweetDetails} />
   </Stack.Navigator>
+);
+
+const Account = () => (
+  <Screen>
+    <Text>Account</Text>
+  </Screen>
+);
+const Tab = createBottomTabNavigator();
+const TabNavigator = () => (
+  <Tab.Navigator>
+    <Tab.Screen name="Feed" component={Tweets} />
+    <Tab.Screen name="Account" component={Account} />
+  </Tab.Navigator>
 );
 
 export default function App() {
   return (
     <NavigationContainer>
-      <StackNavigator />
+      <TabNavigator />
     </NavigationContainer>
   );
 }
 
 // import * as Permissions from "expo-permissions";
-// Taken from the example code in Expo imagePicker documentation
+// Taken from the example co de in Expo imagePicker documentation
 // const pickImage = async () => {
 //   let result = await ImagePicker.launchImageLibraryAsync({
 //     mediaTypes: ImagePicker.MediaTypeOptions.All,
