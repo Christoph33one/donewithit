@@ -17,11 +17,38 @@ import MessagesScreen from "./app/screens/MessagesScreen";
 import React, { useState, useEffect } from "react";
 import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Screen from "./app/components/Screen";
 import ImageInputList from "./app/components/ImageInputList";
+import Screen from "./app/components/Screen";
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+
+const Tweets = () => (
+  <Screen>
+    <Text>Tweets</Text>
+  </Screen>
+);
+
+const TweetsDetails = () => (
+  <Screen>
+    <Text>TweetsDetails</Text>
+  </Screen>
+);
+
+const Stack = createStackNavigator();
+
+const StackNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Tweets" component={Tweets} />
+    <Stack.Screen name="TweetsDetails" component={TweetsDetails} />
+  </Stack.Navigator>
+);
 
 export default function App() {
-  return <ListingEditScreen />;
+  return (
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
+  );
 }
 
 // import * as Permissions from "expo-permissions";
