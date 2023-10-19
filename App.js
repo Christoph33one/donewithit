@@ -25,7 +25,10 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 const Link = () => {
   const navigation = useNavigation();
   return (
-    <Button title="Click" onPress={() => navigation.navigate("TweetDetails")} />
+    <Button
+      title="Click"
+      onPress={() => navigation.navigate("TweetDetails", { id: 1 })}
+    />
   );
 };
 
@@ -36,9 +39,9 @@ const Tweets = ({ navigation }) => (
   </Screen>
 );
 
-const TweetDetails = () => (
+const TweetDetails = ({ route }) => (
   <Screen>
-    <Text>TweetsDetails</Text>
+    <Text>TweetsDetails{route.params.id}</Text>
   </Screen>
 );
 
