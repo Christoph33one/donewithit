@@ -11,7 +11,7 @@ import LoginScreen from "./app/screens/LoginScreen";
 import ListingEditScreen from "./app/screens/ListingEditScreen";
 import ListItem from "./app/components/ListItem";
 import ListingDetailsScreen from "./app/screens/ListingDetailsScreen";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 import MessagesScreen from "./app/screens/MessagesScreen";
 
 import React, { useState, useEffect } from "react";
@@ -25,6 +25,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
+
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Link = () => {
   const navigation = useNavigation();
@@ -101,10 +104,14 @@ const TabNavigator = () => (
 export default function App() {
   return (
     <NavigationContainer theme={navigationTheme}>
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }
+
+// <NavigationContainer theme={navigationTheme}>
+// <AppNavigator />
+// </NavigationContainer>
 
 // import * as Permissions from "expo-permissions";
 // Taken from the example co de in Expo imagePicker documentation
