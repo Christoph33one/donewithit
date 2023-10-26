@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 
+import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/AppButton";
 import Screen from "../components/Screen";
 import Card from "../components/Card";
@@ -38,12 +39,12 @@ function ListingsScreen({ navigation }) {
     <Screen style={styles.screen}>
       {error && (
         <>
-          <AppText>Could'nt retrieve the listings.</AppText>
+          <AppText>Couldn't retrieve the listings.</AppText>
           <Button title="Retry" onPress={loadListings} />
         </>
       )}
-      <ActivityIndicator size="large" />
 
+      <ActivityIndicator visable={loading} />
       <FlatList
         style={styles.screen}
         data={listings}
