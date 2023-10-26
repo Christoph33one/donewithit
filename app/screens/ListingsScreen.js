@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, ActivityIndicator } from "react-native";
 
 import Button from "../components/AppButton";
 import Screen from "../components/Screen";
@@ -12,16 +12,24 @@ import AppText from "../components/AppText";
 function ListingsScreen({ navigation }) {
   const [listings, setListings] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadListings();
   }, []);
 
+  // Asynchronous function that makes an API request
+  // Sets an error if the API response is not okay.
   const loadListings = async () => {
+    // Call to the server
+    setLoading(true);
     const response = await listingsApi.getListings();
+    setLoading(false);
+
+    // If error - show an error
     if (!response.ok) return setError(true);
 
-    // error handling fetching data
+    // Error handling fetching data
     setError(false);
     setListings(response.data);
   };
@@ -34,6 +42,8 @@ function ListingsScreen({ navigation }) {
           <Button title="Retry" onPress={loadListings} />
         </>
       )}
+      <ActivityIndicator size="large" />
+
       <FlatList
         style={styles.screen}
         data={listings}
