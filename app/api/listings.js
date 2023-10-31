@@ -5,7 +5,7 @@ const endpoint = "/listings";
 const getListings = () => client.get(endpoint);
 
 // Post data to the sever using FormData object
-const addListing = (listing) => {
+const addListing = (listing, onUploadProgress) => {
   const data = new FormData();
   data.append("title", listing.title);
   data.append("price", listing.price);
@@ -25,8 +25,11 @@ const addListing = (listing) => {
   if (listing.location)
     data.append("location", JSON.stringify(listing.location));
 
-  // Post to Listings endpoint and data
-  return client.post(endpoint, data);
+  //  Post to Listings endpoint and data
+  return client.post(endpoint, data, {
+    onUploadProgress: (process) =>
+      onUploadProgress(process.loaded / process.total),
+  });
 };
 
 export default {

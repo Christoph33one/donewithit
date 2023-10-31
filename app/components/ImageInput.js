@@ -16,7 +16,7 @@ function ImageInput({ imageUri, onChangeImage }) {
     requestPermission();
   }, []);
 
-  // Give uswer permissions to access devices photos
+  // Give user permissions to access devices photos
   const requestPermission = async () => {
     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
     if (!granted) alert("You need to enable permission to access the library.");
@@ -37,7 +37,16 @@ function ImageInput({ imageUri, onChangeImage }) {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         quality: 0.5,
       });
-      if (!result.canceled) onChangeImage(result.uri);
+      if (!result.canceled && result.assets.length > 0) {
+        // Access the first selected asset (image)
+        const selectedAsset = result.assets[0];
+
+        // Access the image URI from the selected asset
+        const selectedImageUri = selectedAsset.uri;
+
+        // Use the selectedImageUri or pass it to onChangeImage as needed
+        onChangeImage(selectedImageUri);
+      }
     } catch (error) {
       console.log("Error reading an image", error);
     }

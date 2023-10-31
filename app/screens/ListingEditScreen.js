@@ -11,6 +11,7 @@ import {
 import Screen from "../components/Screen";
 import CatergoryPickerItem from "../components/CatergoryPickerItem";
 import FormImagePicker from "../components/forms/FormImagePicker";
+import listingsAPI from "../api/listings";
 import useLocation from "../hooks/useLocation";
 
 // Form validation / Yup is used for form validation
@@ -63,6 +64,15 @@ const categories = [
 function ListingEditScreen() {
   const location = useLocation();
 
+  const handleSubmit = async (listing) => {
+    const result = await listingsAPI.addListing(
+      { ...listing, location },
+      (process) => console.log(process)
+    );
+    if (!result.ok) return alert("Could not save the listing.");
+    alert("Success");
+  };
+
   return (
     <Screen style={styles.container}>
       <Form
@@ -73,7 +83,7 @@ function ListingEditScreen() {
           category: null,
           images: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="images" />
