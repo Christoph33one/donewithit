@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import ActivityIndicator from "../components/ActivityIndicator";
 import Button from "../components/AppButton";
@@ -9,45 +9,31 @@ import colors from "../config/colors";
 import routes from "../navigation/routes";
 import listingsApi from "../api/listings";
 import AppText from "../components/AppText";
+import useApi from "../hooks/useApi";
 
 function ListingsScreen({ navigation }) {
-  const [listings, setListings] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const getListingsApi = useApi(listingsApi.getListings);
 
   useEffect(() => {
-    loadListings();
+    getListingsApi.request(1, 2, 3);
   }, []);
 
   // Asynchronous function that makes an API request
-  // Sets an error if the API response is not okay.
-  const loadListings = async () => {
-    // Call to the server
-    setLoading(true);
-    const response = await listingsApi.getListings();
-    setLoading(false);
-
-    // If error - show an error
-    if (!response.ok) return setError(true);
-
-    // Error handling fetching data
-    setError(false);
-    setListings(response.data);
-  };
+  // Sets an error if the API response is not okay
 
   return (
     <Screen style={styles.screen}>
-      {error && (
-        <>
+      {getListingsApi.error && (
+        <View>
           <AppText>Couldn't retrieve the listings.</AppText>
           <Button title="Retry" onPress={loadListings} />
-        </>
+        </View>
       )}
 
-      <ActivityIndicator visable={loading} />
+      <ActivityIndicator visable={getListingsApi.loading} />
       <FlatList
         style={styles.screen}
-        data={listings}
+        data={getListingsApi.data}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (
           <Card
@@ -61,6 +47,7 @@ function ListingsScreen({ navigation }) {
     </Screen>
   );
 }
+
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
