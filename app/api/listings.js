@@ -21,14 +21,14 @@ const addListing = (listing, onUploadProgress) => {
     })
   );
 
-  // Check if each listing as a location
+  // Check if each listing has a location
   if (listing.location)
     data.append("location", JSON.stringify(listing.location));
 
   //  Post to Listings endpoint and data
   return client.post(endpoint, data, {
-    onUploadProgress: (process) =>
-      onUploadProgress(process.loaded / process.total),
+    onUploadProgress: (progress) =>
+      onUploadProgress(progress.loaded / progress.total),
   });
 };
 

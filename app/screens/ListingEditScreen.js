@@ -14,6 +14,7 @@ import FormImagePicker from "../components/forms/FormImagePicker";
 import listingsAPI from "../api/listings";
 import useLocation from "../hooks/useLocation";
 import UploadScreen from "./UploadScreen";
+// import UploadScreen from "./UploadScreen";
 
 // Form validation / Yup is used for form validation
 const validationSchema = Yup.object().shape({
@@ -64,24 +65,27 @@ const categories = [
 
 function ListingEditScreen() {
   const location = useLocation();
-  const [uploadVisable, setUploadVisable] = useState(false);
+  const [uploadVisible, setUploadVisible] = useState(false); // Fix the variable name here
   const [progress, setProgress] = useState(0);
 
   const handleSubmit = async (listing) => {
-    setUploadVisable(true);
+    setProgress(0);
+    setUploadVisible(true); // Fix the variable name here
     const result = await listingsAPI.addListing(
       { ...listing, location },
-      (process) => setProgress(process)
+      (progress) => setProgress(progress)
     );
-    setUploadVisable(false);
 
-    if (!result.ok) return alert("Could not save the listing.");
+    if (!result.ok) {
+      setUploadVisible(false);
+      return alert("Could not save the listing.");
+    }
     alert("Success");
   };
 
   return (
     <Screen style={styles.container}>
-      <UploadScreen progress={progress} visable={uploadVisable} />
+      <UploadScreen />
       <Form
         initialValues={{
           title: "",
