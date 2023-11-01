@@ -65,12 +65,12 @@ const categories = [
 
 function ListingEditScreen() {
   const location = useLocation();
-  const [uploadVisible, setUploadVisible] = useState(false); // Fix the variable name here
+  const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const handleSubmit = async (listing, { resetForm }) => {
     setProgress(0);
-    setUploadVisible(true); // Fix the variable name here
+    setUploadVisible(true);
     const result = await listingsAPI.addListing(
       { ...listing, location },
       (progress) => setProgress(progress)
@@ -80,7 +80,7 @@ function ListingEditScreen() {
       setUploadVisible(false);
       return alert("Could not save the listing.");
     }
-
+    // Reset form input fields on sumbit
     resetForm();
   };
 

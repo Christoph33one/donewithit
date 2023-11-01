@@ -26,13 +26,12 @@ function ListingsScreen({ navigation }) {
       {getListingsApi.error && (
         <View>
           <AppText>Couldn't retrieve the listings.</AppText>
-          <Button title="Retry" onPress={loadListings} />
+          <Button title="Retry" onPress={getListingsApi.request} />
         </View>
       )}
 
-      <ActivityIndicator visable={getListingsApi.loading} />
+      <ActivityIndicator visible={getListingsApi.loading} />
       <FlatList
-        style={styles.screen}
         data={getListingsApi.data}
         keyExtractor={(listing) => listing.id.toString()}
         renderItem={({ item }) => (

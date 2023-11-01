@@ -9,6 +9,7 @@ import colors from "../config/colors";
 
 // Model for progress bar on data loading
 // Not using this Progress bar component as it is not wokring correctly!
+
 function UploadScreen({ onDone, progress = 0, visible = false }) {
   return <Modal visible={visible}></Modal>;
 }

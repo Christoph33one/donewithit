@@ -9,8 +9,8 @@ const addListing = (listing, onUploadProgress) => {
   const data = new FormData();
   data.append("title", listing.title);
   data.append("price", listing.price);
-  data.append("categoryID", listing.category.value);
-  data.append("description", listing.descrition);
+  data.append("categoryId", listing.category.value);
+  data.append("description", listing.description);
 
   // Iterate over images in array
   listing.images.forEach((image, index) =>
