@@ -68,7 +68,7 @@ function ListingEditScreen() {
   const [uploadVisible, setUploadVisible] = useState(false); // Fix the variable name here
   const [progress, setProgress] = useState(0);
 
-  const handleSubmit = async (listing) => {
+  const handleSubmit = async (listing, { resetForm }) => {
     setProgress(0);
     setUploadVisible(true); // Fix the variable name here
     const result = await listingsAPI.addListing(
@@ -80,7 +80,8 @@ function ListingEditScreen() {
       setUploadVisible(false);
       return alert("Could not save the listing.");
     }
-    alert("Success");
+
+    resetForm();
   };
 
   return (
